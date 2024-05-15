@@ -1,5 +1,4 @@
 import speech_recognition as sr
-import pyaudio
 
 names = ["Giovanni", "Barbaros", "Rajeck", "Joren", "Yağmur"]
 recognizer = sr.Recognizer()
