@@ -44,22 +44,22 @@ def main():
         if command:
             if "giovanni" in command:
                 print("Going to Giovanni.")
-                # Add your code to move the robot to Gio's location here
+                # code to move the robot to Gio's location here
             elif "rajeck" in command:
                 print("Going to Rajeck.")
-                # Add your code to move the robot to Rajeck's location here     
+                # code to move the robot to Rajeck's location here     
             elif "joren" in command:
                 print("Going to Joren.")
-                # Add your code to move the robot to Joren's location here
+                # code to move the robot to Joren's location here
             elif "barbaros" in command:
                 print("Going to Barbaros.")
-                # Add your code to move the robot to Barbaros' location here
+                # code to move the robot to Barbaros' location here
             elif "yağmur" in command:
                 print("Going to Yağmur.")
-                # Add your code to move the robot to Yağmur's location here          
+                # code to move the robot to Yağmur's location here          
             elif "stop" in command:
                 print("Stopping the robot.")
-                # Add your code to stop the robot here
+                # code to stop the robot here
             else:
                 print("Command not recognized. Please try again.")
 
