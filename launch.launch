@@ -1,0 +1,28 @@
+cd ~/catkin_ws/src/my_robot_package
+mkdir launch
+cd launch
+touch my_robot_launch.launch
+
+<launch>
+    <param name="robot_name" type="string" value="giovanni" />
+    <param name="sensor_frequency" type="double" value="10.0" />
+
+    <param name="robot_name" type="string" value="barbaros" />
+    <param name="sensor_frequency" type="double" value="10.0" />
+
+    <param name="robot_name" type="string" value="rajeck" />
+    <param name="sensor_frequency" type="double" value="10.0" />
+
+    <param name="robot_name" type="string" value="joren" />
+    <param name="sensor_frequency" type="double" value="10.0" />
+
+    <param name="robot_name" type="string" value="yağmur" />
+    <param name="sensor_frequency" type="double" value="10.0" />
+
+
+    <node name="voice_command_listener" pkg="my_robot_package" type="voice_command_listener.py" output="screen">
+        <param name="param_name" value="param_value" />
+    </node>
+
+    </node>
+</launch>
