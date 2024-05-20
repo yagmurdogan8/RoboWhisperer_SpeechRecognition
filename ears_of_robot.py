@@ -1,6 +1,6 @@
 import speech_recognition as sr
 
-names = ["Giovanni", "Barbaros", "Rajeck", "Joren", "Yağmur"]
+names = ["giovanni", "barbaros", "rajeck", "joren", "yağmur"]
 recognizer = sr.Recognizer()
 
 def test_microphone():
@@ -13,6 +13,10 @@ def test_microphone():
         try:
             # Recognize the audio using Google Web Speech API
             print("Google Speech Recognition thinks you said: " + recognizer.recognize_google(audio))
+            if recognizer.recognize_google(audio) in names:
+                print("OK")
+            else:
+                print("NOT RECOG")
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand the audio")
         except sr.RequestError as e:
