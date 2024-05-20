@@ -5,9 +5,9 @@ from vosk import Model, KaldiRecognizer
 
 # Paths to the models for each language
 model_paths = {
-    "it-IT": "language_models//vosk-model-small-it-0.22",
-    "tr-TR": "language_models//vosk-model-small-tr-0.3",
-    "nl-NL": "language_models//vosk-model-small-nl-0.22"
+    "it-IT": "C://Users//1//Documents//GitHub//RoboWhisperer_SpeechRecognition//language_models//vosk-model-small-it-0.22//vosk-model-small-it-0.22",
+    "tr-TR": "C://Users//1//Documents//GitHub//RoboWhisperer_SpeechRecognition//language_models//vosk-model-small-tr-0.3",
+    "nl-NL": "C://Users//1//Documents//GitHub//RoboWhisperer_SpeechRecognition//language_models//vosk-model-small-nl-0.22"
 }
 
 # for lang, path in model_paths.items():
