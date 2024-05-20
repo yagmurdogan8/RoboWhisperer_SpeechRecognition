@@ -1,28 +1,28 @@
 import speech_recognition as sr
 
-names = ["giovanni", "barbaros", "rajeck", "joren", "yağmur"]
+names = ["Giovanni", "barbaros", "rajeck", "joren", "yağmur"]
 recognizer = sr.Recognizer()
 
-def test_microphone():
-    with sr.Microphone() as source:
-        print("Adjusting for ambient noise, please wait...")
-        recognizer.adjust_for_ambient_noise(source, duration=5)
-        print("Say something!")
-        audio = recognizer.listen(source)
+# def test_microphone():
+#     with sr.Microphone() as source:
+#         print("Adjusting, please wait...")
+#         recognizer.adjust_for_ambient_noise(source, duration=5)
+#         print("Say something!")
+#         audio = recognizer.listen(source)
         
-        try:
-            # Recognize the audio using Google Web Speech API
-            print("Google Speech Recognition thinks you said: " + recognizer.recognize_google(audio))
-            if recognizer.recognize_google(audio) in names:
-                print("OK")
-            else:
-                print("NOT RECOG")
-        except sr.UnknownValueError:
-            print("Google Speech Recognition could not understand the audio")
-        except sr.RequestError as e:
-            print(f"Could not request results from Google Speech Recognition service; {e}")
+#         try:
+#             # Recognize the audio using Google Web Speech API
+#             print("Google Speech Recognition thinks you said: " + recognizer.recognize_google(audio))
+#             if recognizer.recognize_google(audio) in names:
+#                 print("OK")
+#             else:
+#                 print("NOT RECOG")
+#         except sr.UnknownValueError:
+#             print("Google Speech Recognition could not understand the audio")
+#         except sr.RequestError as e:
+#             print(f"Could not request results from Google Speech Recognition service; {e}")
 
-test_microphone()
+# test_microphone()
 
 
 def listen_for_command():
