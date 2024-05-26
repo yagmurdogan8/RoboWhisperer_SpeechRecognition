@@ -2,20 +2,16 @@ import os
 import json
 import pyaudio
 from vosk import Model, KaldiRecognizer
+from pathlib import Path
+src = Path('C:/Users/Playground/filename.xlsx')
 
 # Paths to the models for each language
 model_paths = {
-    "it-IT": "C://Users//1//Documents//GitHub//RoboWhisperer_SpeechRecognition//language_models//vosk-model-small-it-0.22//vosk-model-small-it-0.22",
-    "tr-TR": "C://Users//1//Documents//GitHub//RoboWhisperer_SpeechRecognition//language_models//vosk-model-small-tr-0.3",
-    "nl-NL": "C://Users//1//Documents//GitHub//RoboWhisperer_SpeechRecognition//language_models//vosk-model-small-nl-0.22"
+    "it-IT": Path("C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-it-0.22\vosk-model-small-it-0.22"),
+    "tr-TR": Path("C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-tr-0.3"),
+    "nl-NL": Path("C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-nl-0.22")
 }
 
-# for lang, path in model_paths.items():
-#     if os.path.exists(path):
-#         print(f"Path for {lang} exists: {path}")
-#     else:
-#         print(f"Path for {lang} does NOT exist: {path}")
-        
 # List of names in different languages
 names = ["giovanni", "barbaros", "rajeck", "joren", "yağmur"]
 
@@ -28,31 +24,60 @@ language_codes = {
     "yağmur": "tr-TR"
 }
 
+def check_model_files(model_path):
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model path {model_path} does not exist.")
+    
+    # Print the contents of the model directory
+    print(f"Contents of model directory {model_path}:")
+    for root, dirs, files in os.walk(model_path):
+        for file in files:
+            print(os.path.join(root, file))
+    
+    # Check for expected files
+    required_files = ['am', 'graph', 'ivector']
+    for req_file in required_files:
+        if not any(req_file in file for file in files):
+            raise FileNotFoundError(f"Required file '{req_file}' not found in the model directory {model_path}.")
+
 def load_model(language_code):
     model_path = model_paths.get(language_code)
     print(f"Loading model for language {language_code} from path: {model_path}")  # Debugging statement
     if not model_path or not os.path.exists(model_path):
         raise FileNotFoundError(f"Model for language {language_code} not found.")
+    
+    # Check model files
+    check_model_files(model_path)
+    
     return Model(model_path)
 
 def recognize_speech(model):
     recognizer = KaldiRecognizer(model, 16000)
     p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=4096)
-    stream.start_stream()
+    
+    try:
+        stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=4096)
+        stream.start_stream()
 
-    print("Listening for a command...")
+        print("Listening for a command...")
 
-    while True:
-        data = stream.read(4096)
-        if len(data) == 0:
-            break
-        if recognizer.AcceptWaveform(data):
-            result = recognizer.Result()
-            result_dict = json.loads(result)
-            command = result_dict.get("text", "").lower()
-            print(f"Command received: {command}")
-            return command
+        while True:
+            data = stream.read(4096, exception_on_overflow=False)
+            if len(data) == 0:
+                break
+            if recognizer.AcceptWaveform(data):
+                result = recognizer.Result()
+                result_dict = json.loads(result)
+                command = result_dict.get("text", "").lower()
+                print(f"Command received: {command}")
+                return command
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
+        
     return None
 
 def process_command(command):
@@ -68,13 +93,24 @@ def process_command(command):
     return False
 
 def main():
+    # Check all models at the start
+    for lc in set(language_codes.values()):
+        try:
+            check_model_files(model_paths[lc])
+        except Exception as e:
+            print(f"An error occurred while checking model files for language {lc}: {e}")
+            return
+    
     while True:
         for lc in set(language_codes.values()):
-            model = load_model(lc)
-            command = recognize_speech(model)
-            if command:
-                if process_command(command):
-                    return
+            try:
+                model = load_model(lc)
+                command = recognize_speech(model)
+                if command:
+                    if process_command(command):
+                        return
+            except Exception as e:
+                print(f"An error occurred while processing language {lc}: {e}")
         print("Listening for another command...")
 
 if __name__ == "__main__":
