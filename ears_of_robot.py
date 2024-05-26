@@ -5,10 +5,11 @@ from vosk import Model, KaldiRecognizer
 
 # Paths to the models for each language
 model_paths = {
-    "it-IT": "C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\italian\vosk-model-small-it-0.22",
-    "tr-TR": "C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\turkish\vosk-model-small-tr-0.3",
-    "nl-NL": "C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\dutch"
+    "it-IT": r"C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\italian\vosk-model-small-it-0.22",
+    "tr-TR": r"C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\turkish\vosk-model-small-tr-0.3",
+    "nl-NL": r"C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\dutch\vosk-model-small-nl-0.22"
 }
+
 
 # List of names in different languages
 names = ["giovanni", "barbaros", "rajeck", "joren", "yağmur"]
