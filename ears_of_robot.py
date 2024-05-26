@@ -3,13 +3,12 @@ import json
 import pyaudio
 from vosk import Model, KaldiRecognizer
 from pathlib import Path
-src = Path('C:/Users/Playground/filename.xlsx')
 
 # Paths to the models for each language
 model_paths = {
-    "it-IT": Path('C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-it-0.22\vosk-model-small-it-0.22'),
-    "tr-TR": Path('C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-tr-0.3'),
-    "nl-NL": Path('C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-nl-0.22')
+    "it-IT": Path(r'C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-it-0.22\vosk-model-small-it-0.22'),
+    "tr-TR": Path(r'C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-tr-0.3\vosk-model-small-tr-0.3'),
+    "nl-NL": Path(r'C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\vosk-model-small-nl-0.22\vosk-model-small-nl-0.22')
 }
 
 # List of names in different languages
