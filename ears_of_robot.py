@@ -58,6 +58,18 @@ def recognize_speech(model):
         
     return None
 
+def correct_recognition(command):
+    corrections = {
+        "jorn": "joren",
+        "joyn": "joren",
+        "rajeck": "rajeck",
+        "ragek": "rajeck",
+        "rakek": "rajeck"
+    }
+    words = command.split()
+    corrected_words = [corrections.get(word, word) for word in words]
+    return " ".join(corrected_words)
+
 def process_command(command, vocabulary):
     for word in vocabulary:
         if word.lower() in command:
