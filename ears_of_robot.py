@@ -74,9 +74,12 @@ def correct_recognition(command):
         "leek": "rajeck",
         "lake": "rajeck",
         "nee": "rajeck",
-        "layık": "rajeck",
+        "layık": "rajeck",      
+        "blijkt": "rajeck",
         "re": "rajeck",
         "john": "yağmur",
+        "io amo": "yağmur",
+        "yandı": "yağmur",
         "jan": "yağmur",
         "ons": "barbaros"        
     }
