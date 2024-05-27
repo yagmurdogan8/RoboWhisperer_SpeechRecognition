@@ -10,7 +10,6 @@ model_paths = {
     "nl-NL": r"C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\dutch\vosk-model-small-nl-0.22"
 }
 
-
 # List of names in different languages
 names = ["giovanni", "barbaros", "rajeck", "joren", "yağmur"]
 
@@ -29,8 +28,10 @@ def load_model(language_code):
         raise FileNotFoundError(f"Model for language {language_code} not found at {model_path}.")
     return Model(model_path)
 
-def recognize_speech(model):
+def recognize_speech(model, vocabulary):
     recognizer = KaldiRecognizer(model, 16000)
+    recognizer.SetWords(True)
+
     p = pyaudio.PyAudio()
     
     try:
@@ -59,25 +60,28 @@ def recognize_speech(model):
         
     return None
 
-def process_command(command):
-    for name in names:
-        if name.lower() in command:
-            print(f"Going to {name.capitalize()}.")
-            # Insert code to move the robot to the respective location here
+def process_command(command, vocabulary):
+    for word in vocabulary:
+        if word.lower() in command:
+            print(f"Recognized command: {word}")
+            if word.lower() in names:
+                print(f"Going to {word.capitalize()}.")
+                # Insert code to move the robot to the respective location here
+            elif word.lower() == "stop":
+                print("Stopping the robot.")
+                # Insert code to stop the robot here
             return True
-    if "stop" in command:
-        print("Stopping the robot.")
-        # Insert code to stop the robot here
-        return True
     return False
 
 def main():
+    vocabulary = ["giovanni", "barbaros", "rajeck", "joren", "yağmur", "stop"]
+    
     while True:
         for lc in set(language_codes.values()):
             try:
                 model = load_model(lc)
-                command = recognize_speech(model)
-                if command and process_command(command):
+                command = recognize_speech(model, vocabulary)
+                if command and process_command(command, vocabulary):
                     return
             except Exception as e:
                 print(f"An error occurred while processing language {lc}: {e}")
@@ -85,8 +89,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
 # import speech_recognition as sr
 
