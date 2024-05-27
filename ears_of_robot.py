@@ -3,17 +3,15 @@ import json
 import pyaudio
 from vosk import Model, KaldiRecognizer
 
-# Paths to the models for each language
 model_paths = {
     "it-IT": r"C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\italian\vosk-model-small-it-0.22",
     "tr-TR": r"C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\turkish\vosk-model-small-tr-0.3",
     "nl-NL": r"C:\Users\1\Documents\GitHub\RoboWhisperer_SpeechRecognition\language_models\dutch\vosk-model-small-nl-0.22"
 }
 
-# List of names in different languages
+
 names = ["giovanni", "barbaros", "rajeck", "joren", "yağmur"]
 
-# Dictionary to map names to language codes
 language_codes = {
     "giovanni": "it-IT",
     "barbaros": "tr-TR",
@@ -28,10 +26,10 @@ def load_model(language_code):
         raise FileNotFoundError(f"Model for language {language_code} not found at {model_path}.")
     return Model(model_path)
 
-def recognize_speech(model, vocabulary):
+def recognize_speech(model):
     recognizer = KaldiRecognizer(model, 16000)
     recognizer.SetWords(True)
-
+    
     p = pyaudio.PyAudio()
     
     try:
@@ -49,10 +47,10 @@ def recognize_speech(model, vocabulary):
                 result_dict = json.loads(result)
                 command = result_dict.get("text", "").lower()
                 if command:
-                    print(f"Command received: {command}")
+                    print(f"Name of the person: {command}")
                     return command
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"Error: {e}")
     finally:
         stream.stop_stream()
         stream.close()
@@ -60,35 +58,35 @@ def recognize_speech(model, vocabulary):
         
     return None
 
-def process_command(command, vocabulary):
-    for word in vocabulary:
-        if word.lower() in command:
-            print(f"Recognized command: {word}")
-            if word.lower() in names:
-                print(f"Going to {word.capitalize()}.")
-                # Insert code to move the robot to the respective location here
-            elif word.lower() == "stop":
-                print("Stopping the robot.")
-                # Insert code to stop the robot here
+def process_command(command):
+    for name in names:
+        if name.lower() in command:
+            print(f"Going to {name.capitalize()}...")
+            # code to move robot to that person
             return True
+    if "stop" in command:
+        print("Stopping the robot...")
+        # code to stop the robot
+        return True
     return False
 
 def main():
     vocabulary = ["giovanni", "barbaros", "rajeck", "joren", "yağmur", "stop"]
-    
     while True:
         for lc in set(language_codes.values()):
             try:
                 model = load_model(lc)
-                command = recognize_speech(model, vocabulary)
-                if command and process_command(command, vocabulary):
+                command = recognize_speech(model)
+                if command and process_command(command):
                     return
             except Exception as e:
-                print(f"An error occurred while processing language {lc}: {e}")
+                print(f"Error while processing language {lc}: {e}")
         print("Listening for another command...")
 
 if __name__ == "__main__":
     main()
+
+
 
 # import speech_recognition as sr
 
