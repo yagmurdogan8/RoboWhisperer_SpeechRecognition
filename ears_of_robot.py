@@ -67,6 +67,7 @@ def correct_recognition(command):
         "i ore": "joren",
         "yorum": "joren",        
         "joden": "joren",
+        "worden": "joren",
         "yörenin": "joren",
         "draaien": "rajeck",
         "raee": "rajeck",
@@ -83,7 +84,9 @@ def correct_recognition(command):
         "io amo": "yağmur",
         "yandı": "yağmur",
         "jan": "yağmur",
-        "ons": "barbaros"        
+        "ons": "barbaros",
+        "stap": "stop",       
+        "star": "stop"
     }
     words = command.split()
     corrected_words = [corrections.get(word, word) for word in words]
