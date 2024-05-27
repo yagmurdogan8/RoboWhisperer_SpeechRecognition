@@ -60,19 +60,34 @@ def recognize_speech(model):
 
 def correct_recognition(command):
     corrections = {
-        "jorn": "joren",
-        "joyn": "joren",
-        "rajeck": "rajeck",
-        "ragek": "rajeck",
-        "rakek": "rajeck"
+        "jordan": "joren",
+        "horen": "joren",
+        "oren": "joren",
+        "jordaan": "joren",
+        "i ore": "joren",
+        "yorum": "joren",        
+        "joden": "joren",
+        "yörenin": "joren",
+        "draaien": "rajeck",
+        "raee": "rajeck",
+        "ray": "rajeck",
+        "leek": "rajeck",
+        "lake": "rajeck",
+        "nee": "rajeck",
+        "layık": "rajeck",
+        "re": "rajeck",
+        "john": "yağmur",
+        "jan": "yağmur",
+        "ons": "barbaros"        
     }
     words = command.split()
     corrected_words = [corrections.get(word, word) for word in words]
     return " ".join(corrected_words)
 
 def process_command(command, vocabulary):
+    corrected_command = correct_recognition(command)
     for word in vocabulary:
-        if word.lower() in command:
+        if word.lower() in corrected_command:
             print(f"Name of the person: {word}")
             if word.lower() in names:
                 print(f"Going to {word.capitalize()}...")
