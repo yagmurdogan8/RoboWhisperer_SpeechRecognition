@@ -47,7 +47,7 @@ def recognize_speech(model):
                 result_dict = json.loads(result)
                 command = result_dict.get("text", "").lower()
                 if command:
-                    print(f"Name of the person: {command}")
+                    print(f"Detected command: {command}")
                     return command
     except Exception as e:
         print(f"Error: {e}")
@@ -58,16 +58,17 @@ def recognize_speech(model):
         
     return None
 
-def process_command(command):
-    for name in names:
-        if name.lower() in command:
-            print(f"Going to {name.capitalize()}...")
-            # code to move robot to that person
+def process_command(command, vocabulary):
+    for word in vocabulary:
+        if word.lower() in command:
+            print(f"Name of the person: {word}")
+            if word.lower() in names:
+                print(f"Going to {word.capitalize()}...")
+                # code to move the robot to that person
+            elif word.lower() == "stop":
+                print("Stopping the robot...")
+                # code to stop the robot
             return True
-    if "stop" in command:
-        print("Stopping the robot...")
-        # code to stop the robot
-        return True
     return False
 
 def main():
@@ -77,7 +78,7 @@ def main():
             try:
                 model = load_model(lc)
                 command = recognize_speech(model)
-                if command and process_command(command):
+                if command and process_command(command, vocabulary):
                     return
             except Exception as e:
                 print(f"Error while processing language {lc}: {e}")
